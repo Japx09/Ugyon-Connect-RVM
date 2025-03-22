@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Object Detection</title>
+</head>
+<body>
+    <h1>Object Detection System</h1>
+    <button onclick="startDetection()">Start Detection</button>
+    <p id="status"></p>
+
+    <script>
+        function startDetection() {
+            fetch('/start_detection', { method: 'POST' })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('status').innerText = data.message || data.error;
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,239 @@
+@import url("https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Libre+Bodoni:ital,wght@0,400..700;1,400..700&family=Patrick+Hand&display=swap");
+
+* {
+  padding: 0;
+  margin: 0;
+  font-family: "Patrick Hand", cursive;
+}
+body {
+  box-sizing: border-box;
+}
+
+.main-body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f1f1f1;
+}
+
+.main-body-button {
+  z-index: 100;
+  align-items: end;
+  justify-content: end;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin: 0 20px 10px 0;
+  justify-content: center;
+  text-align: center;
+  width: 30%;
+}
+
+.main-start-button {
+  border-radius: 20px;
+  border-color: black;
+  background-color: black;
+  color: white;
+  width: 100%;
+  padding: 10px 20px;
+}
+
+.main-start-button:hover {
+  cursor: pointer;
+}
+
+/* TRANSACTION PAGE */
+.transaction-body-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60vh;
+  background-color: #f1f1f1;
+}
+
+.transaction-body-image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  width: 100vw;
+}
+
+.transaction-body-image-container img {
+  height: auto;
+}
+.transaction-box1 {
+  height: 55vh;
+  background-color: gray;
+  justify-content: center;
+  align-items: center;
+  width: 33%;
+}
+/* .image-1 {
+  width: 33%;
+} */
+
+.transaction-box2 {
+  background-color: gray;
+  height: 55vh;
+
+  justify-content: center;
+  align-items: center;
+  width: 20%;
+}
+
+.transaction-box3 {
+  background-color: gray;
+  height: 55vh;
+
+  justify-content: center;
+  align-items: center;
+  width: 20%;
+}
+
+.transaction-box4 {
+  background-color: gray;
+  height: 55vh;
+
+  justify-content: center;
+  align-items: center;
+  width: 20%;
+}
+/* .image-2,
+.image-3,
+.image-4 {
+  width: 22%;
+} */
+.transaction-bottom-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  background-color: #f1f1f1;
+}
+
+.transaction-left-container {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 2rem;
+}
+.transaction-left-container table {
+  width: 100%;
+
+  font-size: 24px;
+  border-collapse: collapse;
+  border-spacing: 0;
+  text-align: left;
+}
+.transaction-left-container table th {
+  text-align: left;
+  padding: 10px;
+}
+.transaction-left-container table td {
+  padding: 10px;
+}
+.transaction-right-container {
+  width: 50%;
+  justify-content: center;
+  align-items: right;
+  text-align: right;
+  padding-right: 2rem;
+}
+.transaction-right-container-content h1 {
+  padding: 10px 0;
+}
+.transaction-button {
+  border-radius: 10px;
+  border-color: black;
+  background-color: black;
+  color: white;
+  width: 50%;
+  padding: 10px 20px;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  min-height: 40%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  width: 90%;
+  max-width: 500px;
+}
+#modal1 {
+  min-height: 20%;
+}
+.modal table {
+  width: 100%;
+
+  font-size: 24px;
+  border-collapse: collapse;
+  border-spacing: 0;
+  text-align: left;
+}
+.modal table th {
+  text-align: left;
+  padding: 10px;
+}
+.modal table td {
+  padding: 10px;
+}
+.modal.active {
+  display: block;
+}
+.modal-header {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+}
+.modal-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  height: 100%;
+}
+.modal-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.modal-button.yes {
+  background-color: black;
+  color: white;
+}
+.modal-button.no {
+  background-color: white;
+  color: black;
+  border-color: black;
+  border: 1px solid #000;
+}
+.overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+.overlay.active {
+  display: block;
+}
+.modal-bottom {
+    text-align: right;
+    width: 100%;
+}
+.modal-bottom p {
+    padding-right: 20px;
+}
