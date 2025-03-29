@@ -557,3 +557,32 @@ span {
 	align-items: center;
 	text-decoration: none;
 }
+
+.thank_you_container {
+	height: 100%;
+	background: #9dc468;
+
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+
+	gap: 10px;
+
+	color: white;
+}
+
+.thank_you_container h1 {
+	font-size: 4rem;
+	text-transform: uppercase;
+}
+
+.thank_you_container p {
+	font-size: 1.5rem;
+	text-align: center;
+}
+
+.thank_you_container p span {
+	font-size: 1.2rem;
+	animation: blink 3s infinite;
+}

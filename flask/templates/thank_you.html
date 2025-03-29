@@ -1,0 +1,17 @@
+{% extends "base.html" %} {% block title %}Start UI{% endblock %} {% block
+content %}
+<div class="thank_you_container">
+	<h1>Thank you for recycling!</h1>
+	<p>
+		Your voucher has been printed. Use it to claim your rewards.
+		<br />
+		<span>Touch to continue</span>
+	</p>
+</div>
+
+<script>
+	document.addEventListener("click", function () {
+		window.location.href = "/";
+	});
+</script>
+{% endblock %}

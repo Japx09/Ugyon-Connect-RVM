@@ -34,6 +34,11 @@ def anonymous_transaction():
     return render_template("anonymous_transaction.html")
 
 
+@app.route("/thank_you")
+def thank_you():
+    return render_template("thank_you.html")
+
+
 @app.route("/start_detection", methods=["POST"])
 def start_detection():
     try:

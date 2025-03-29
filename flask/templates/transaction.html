@@ -1,24 +1,84 @@
 {% extends "base.html" %} {% block title %}Start UI{% endblock %} {% block
 content %}
-<div class="transaction-screen animate-fade-in">
-	<h1>Start Transaction</h1>
-	<div class="bottle-container">
-		<div>
-			<img src="static/images/bottle.svg" alt="Bottle" />
-			<p>Small<br /><span>2</span></p>
-		</div>
-		<div>
-			<img src="static/images/bottle.svg" alt="Bottle" />
-			<p>Medium<br /><span>3</span></p>
-		</div>
-		<div>
-			<img src="static/images/bottle.svg" alt="Bottle" />
-			<p>Large<br /><span>5</span></p>
+
+<div class="splash-screen fade-out">
+	<img src="static/images/logo_w_caption.svg" alt="Logo" />
+</div>
+
+<div class="at-container">
+	<div class="at-1">
+		<div class="at-guide">
+			<div class="at-instruction">
+				<h1>1</h1>
+				<p>
+					Only <b>plastic bottles</b> are <br />
+					accepted. <span>No glass bottles</span>, <br />
+					cans, or other materials.
+				</p>
+			</div>
+			<div class="at-instruction">
+				<h1>2</h1>
+				<p>
+					Insert one bottle at a time <br />
+					and wait for detection.
+				</p>
+			</div>
+			<div class="at-instruction">
+				<h1>3</h1>
+				<p>
+					Click "Finish" when you’re <br />
+					done.
+				</p>
+			</div>
 		</div>
 	</div>
-	<div class="bottom-container">
-		<p><strong>Total Points: 30 pts</strong></p>
-		<button class="finish-button"><strong>Finish</strong></button>
+	<div class="at-2">
+		<h1>Bottles Inserted</h1>
+		<h2><span id="points">10.3</span> pts</h2>
+		<div class="at-bottles">
+			<div class="at-bottle">
+				<img
+					src="{{ url_for('static', filename='images/bottle.png') }}"
+					alt="Bottle"
+				/>
+				<h3>Small</h3>
+				<span>23</span>
+			</div>
+			<div class="at-bottle">
+				<img
+					src="{{ url_for('static', filename='images/bottle.png') }}"
+					alt="Bottle"
+				/>
+				<h3>Medium</h3>
+				<span>23</span>
+			</div>
+			<div class="at-bottle">
+				<img
+					src="{{ url_for('static', filename='images/bottle.png') }}"
+					alt="Bottle"
+				/>
+				<h3>Large</h3>
+				<span>23</span>
+			</div>
+		</div>
+		<button type="button" class="finish-button" id="finish_button">
+			Finish
+		</button>
 	</div>
 </div>
+
+<script defer>
+	const btn = document.getElementById("finish_button");
+	const splash_screen = document.querySelector(".splash-screen");
+
+	btn.addEventListener("click", () => {
+		splash_screen.classList.remove("fade-out");
+		splash_screen.classList.add("fade-in");
+
+		// Instead of the timer here, you can use a function from your HARDWARE, like after printing the voucher, only then will the user be redirected to the thank you page.
+		setTimeout(() => {
+			window.location.href = "/thank_you";
+		}, 2000);
+	});
+</script>
 {% endblock %}

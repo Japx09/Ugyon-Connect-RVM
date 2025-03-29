@@ -1,5 +1,10 @@
 {% extends "base.html" %} {% block title %}Start UI{% endblock %} {% block
 content %}
+
+<div class="splash-screen fade-out">
+	<img src="static/images/logo_w_caption.svg" alt="Logo" />
+</div>
+
 <div class="at-container">
 	<div class="at-1">
 		<div class="at-guide">
@@ -29,7 +34,6 @@ content %}
 	</div>
 	<div class="at-2">
 		<h1>Bottles Inserted</h1>
-		{% comment %} USE THE POINTS ID HERE FOR DYNAMIC {% endcomment %}
 		<h2><span id="points">10.3</span> pts</h2>
 		<div class="at-bottles">
 			<div class="at-bottle">
@@ -38,7 +42,6 @@ content %}
 					alt="Bottle"
 				/>
 				<h3>Small</h3>
-				{% comment %} USE THE SPAN BELOW FOR DYNAMIC {% endcomment %}
 				<span>23</span>
 			</div>
 			<div class="at-bottle">
@@ -47,7 +50,6 @@ content %}
 					alt="Bottle"
 				/>
 				<h3>Medium</h3>
-				{% comment %} USE THE SPAN BELOW FOR DYNAMIC {% endcomment %}
 				<span>23</span>
 			</div>
 			<div class="at-bottle">
@@ -56,11 +58,27 @@ content %}
 					alt="Bottle"
 				/>
 				<h3>Large</h3>
-				{% comment %} USE THE SPAN BELOW FOR DYNAMIC {% endcomment %}
 				<span>23</span>
 			</div>
 		</div>
-		<button class="finish-button">Finish</button>
+		<button type="button" class="finish-button" id="finish_button">
+			Finish
+		</button>
 	</div>
 </div>
+
+<script defer>
+	const btn = document.getElementById("finish_button");
+	const splash_screen = document.querySelector(".splash-screen");
+
+	btn.addEventListener("click", () => {
+		splash_screen.classList.remove("fade-out");
+		splash_screen.classList.add("fade-in");
+
+		// Instead of the timer here, you can use a function from your HARDWARE, like after printing the voucher, only then will the user be redirected to the thank you page.
+		setTimeout(() => {
+			window.location.href = "/thank_you";
+		}, 2000);
+	});
+</script>
 {% endblock %}
