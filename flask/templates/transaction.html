@@ -1,0 +1,24 @@
+{% extends "base.html" %} {% block title %}Start UI{% endblock %} {% block
+content %}
+<div class="transaction-screen animate-fade-in">
+	<h1>Start Transaction</h1>
+	<div class="bottle-container">
+		<div>
+			<img src="static/images/bottle.svg" alt="Bottle" />
+			<p>Small<br /><span>2</span></p>
+		</div>
+		<div>
+			<img src="static/images/bottle.svg" alt="Bottle" />
+			<p>Medium<br /><span>3</span></p>
+		</div>
+		<div>
+			<img src="static/images/bottle.svg" alt="Bottle" />
+			<p>Large<br /><span>5</span></p>
+		</div>
+	</div>
+	<div class="bottom-container">
+		<p><strong>Total Points: 30 pts</strong></p>
+		<button class="finish-button"><strong>Finish</strong></button>
+	</div>
+</div>
+{% endblock %}

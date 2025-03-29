@@ -1,0 +1,57 @@
+<!-- templates/home.html -->
+{% extends "base.html" %} {% block title %}Home{% endblock %} {% block content
+%}
+<div class="qr_code_container">
+	<div class="qr_head">
+		<h1 class="qr_code_header">Scan Your QR Code to Begin</h1>
+		<a href="/select_option">
+			<img
+				src="{{ url_for('static', filename='images/Arrow_Left.svg') }}"
+				alt="Back"
+				class="back-arrow"
+			/>
+		</a>
+	</div>
+
+	<div class="qr_code_body">
+		<div class="qr-image-container">
+			<img
+				src="{{ url_for('static', filename='images/qr-code.png') }}"
+				alt="QR Code"
+				class="qr-image"
+			/>
+		</div>
+		<div class="qr-guide">
+			<div class="qr-guide-value">
+				<h1>1</h1>
+				<p>
+					Use your Ugyon App or QR Card to scan <br />
+					your unique QR code.
+				</p>
+			</div>
+			<div class="qr-guide-value">
+				<h1>2</h1>
+				<p>
+					Hold your QR code steady within the <br />
+					scanner frame.
+				</p>
+			</div>
+			<div class="qr-guide-value">
+				<h1>3</h1>
+				<p>
+					Once scanned, you can start recycling <br />
+					bottles and earning points!
+				</p>
+			</div>
+		</div>
+	</div>
+
+	<div class="scan-text">
+		Scanning
+		<span class="dots"
+			><span class="dot">.</span><span class="dot">.</span
+			><span class="dot">.</span></span
+		>
+	</div>
+</div>
+{% endblock %}

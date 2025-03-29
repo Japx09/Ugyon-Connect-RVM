@@ -1,257 +1,38 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Start UI</title>
-    <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            width: 100vw;
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: white;
-            overflow: hidden;
-        }
+<!-- templates/home.html -->
+{% extends "base.html" %} {% block title %}Home{% endblock %} {% block content
+%}
+<div class="splash-screen">
+	<img src="static/images/logo_w_caption.svg" alt="Logo" />
+</div>
 
-        .splash-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            opacity: 1;
-            transition: opacity 2s ease-in-out;
-        }
+<div class="container">
+	<div class="video-box">
+		<video src="static/videos/v1.mp4" autoplay loop muted></video>
+	</div>
+	<div class="side-panel">
+		<div class="logo">
+			<img src="static/images/logo_w_caption.svg" />
+		</div>
+		<a href="{{ url_for('select_option') }}" class="start-button">START</a>
+	</div>
+</div>
 
-        .splash-screen.fade-out {
-            opacity: 0;
-            pointer-events: none;
-        }
+<script defer>
+	window.onload = function () {
+		setTimeout(() => {
+			document.querySelector(".splash-screen").classList.add("fade-out");
+		}, 2000);
+	};
 
-        .splash-screen img {
-            width: 150px;
-            height: auto;
-        }
-
-        .container, .transaction-screen {
-            width: 100vw;
-            height: 100vh;
-            padding: 20px;
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            border-radius: 10px;
-            transition: opacity 1s ease-in-out;
-        }
-
-        .transaction-screen {
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            background: #f0f8e2;
-        }
-
-        .video-box {
-            width: 60%;
-            height: 80%;
-            border-radius: 10%;
-            overflow: hidden;
-            box-shadow: 4px 4px 10px rgba(16, 16, 16, 0.15);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .video-box video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 10%;
-        }
-
-        .side-panel {
-            height: 80%;
-            width: 40%;
-            background: #dff0d8;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            border-radius: 30px;
-            justify-content: space-between;
-            box-shadow: 4px 4px 10px rgba(16, 16, 16, 0.15);
-        }
-
-        .logo {
-            margin-bottom: 20px;
-            height: 276px;
-            width: 181px;
-            align-items: center;
-            justify-content: center;
-            display: flex;
-        }
-
-        .logo img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
-
-        .start-button {
-            background: #7cb342;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            font-size: 60px;
-            height: 230px;
-            width: 466px;
-            cursor: pointer;
-            border-radius: 20px;
-            box-shadow: 4px 4px 10px rgba(16, 16, 16, 0.15);
-            transition: 0.3s ease-in-out;
-        }
-
-        .start-button:hover {
-            transform: scale(1.05);
-        }
-
-        .transaction-screen h1 {
-            font-size: 42px;
-            margin-bottom: 100px;
-        }
-
-        .bottle-container {
-            display: flex;
-            gap: 200px;
-            text-align: center;
-        }
-
-        .bottle-container div {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .bottle-container img {
-            width: 75px;
-            height: auto;
-        }
-
-        .bottle-container div p {
-            font-size: 16px;
-        }
-
-        .bottle-container div p br + span {
-            font-size: 18px;
-            font-weight: bold;
-        }
-
-        .bottom-container {
-            margin-left: 25px;
-            display: flex;
-            justify-content: space-between;
-            width: 100%;
-            padding: 20px;
-        }
-
-        .bottom-container p {
-            font-size: 24px;
-        }
-
-        .finish-button {
-            margin-right: 25px;
-            padding: 10px 50px;
-            font-size: 24px;
-            border: 3px solid #101010;
-            border-radius: 40px;
-            cursor: pointer;
-            background: white;
-        }
-    </style>
-    <script>
-        window.onload = function () {
-            setTimeout(() => {
-                document.querySelector(".splash-screen").classList.add("fade-out");
-            }, 8000);
-        };
-
-        function openFullscreen() {
-            var elem = document.documentElement;
-            if (elem.requestFullscreen) {
-                elem.requestFullscreen();
-            } else if (elem.webkitRequestFullscreen) {
-                elem.webkitRequestFullscreen();
-            } else if (elem.msRequestFullscreen) {
-                elem.msRequestFullscreen();
-            }
-        }
-
-        document.addEventListener("dblclick", function () {
-            openFullscreen();
-        });
-
-        function startTransaction() {
-            document.querySelector(".container").style.display = "none";
-            document.querySelector(".transaction-screen").style.display = "flex";
-
-            // Call Flask API to start object detection
-            fetch('/start_detection', {
-                method: 'POST'
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log("Response:", data);
-                if (data.message) {
-                    alert("✅ " + data.message);
-                } else {
-                    alert("⚠️ Error: " + data.error);
-                }
-            })
-            .catch(error => {
-                console.error("Error:", error);
-                alert("❌ Failed to start object detection.");
-            });
-        }
-    </script>
-</head>
-<body>
-    <div class="splash-screen">
-        <img src="static/images/logo_w_caption.svg" alt="Logo">
-    </div>
-
-    <div class="container">
-        <div class="video-box">
-            <video src="static/videos/v1.mp4" autoplay loop muted></video>
-        </div>
-        <div class="side-panel">
-            <div class="logo"> 
-                <img src="static/images/logo_w_caption.svg">
-            </div>
-            <button class="start-button" onclick="startTransaction()">START</button>
-        </div>
-    </div>
-
-    <div class="transaction-screen">
-        <h1>Start Transaction</h1>
-        <div class="bottle-container">
-            <div><img src="static/images/bottle.svg" alt="Bottle"><p>Small<br><span>2</span></p></div>
-            <div><img src="static/images/bottle.svg" alt="Bottle"><p>Medium<br><span>3</span></p></div>
-            <div><img src="static/images/bottle.svg" alt="Bottle"><p>Large<br><span>5</span></p></div>
-        </div>
-        <div class="bottom-container">
-            <p><strong>Total Points: 30 pts</strong></p>
-            <button class="finish-button"><strong>Finish</strong></button>
-        </div>
-    </div>
-</body>
-</html>
+	function openFullscreen() {
+		var elem = document.documentElement;
+		if (elem.requestFullscreen) {
+			elem.requestFullscreen();
+		} else if (elem.webkitRequestFullscreen) {
+			elem.webkitRequestFullscreen();
+		} else if (elem.msRequestFullscreen) {
+			elem.msRequestFullscreen();
+		}
+	}
+</script>
+{% endblock %}
