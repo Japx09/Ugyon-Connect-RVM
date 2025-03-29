@@ -1,0 +1,66 @@
+{% extends "base.html" %} {% block title %}Start UI{% endblock %} {% block
+content %}
+<div class="at-container">
+	<div class="at-1">
+		<div class="at-guide">
+			<div class="at-instruction">
+				<h1>1</h1>
+				<p>
+					Only <b>plastic bottles</b> are <br />
+					accepted. <span>No glass bottles</span>, <br />
+					cans, or other materials.
+				</p>
+			</div>
+			<div class="at-instruction">
+				<h1>2</h1>
+				<p>
+					Insert one bottle at a time <br />
+					and wait for detection.
+				</p>
+			</div>
+			<div class="at-instruction">
+				<h1>3</h1>
+				<p>
+					Click "Finish" when you’re <br />
+					done.
+				</p>
+			</div>
+		</div>
+	</div>
+	<div class="at-2">
+		<h1>Bottles Inserted</h1>
+		{% comment %} USE THE POINTS ID HERE FOR DYNAMIC {% endcomment %}
+		<h2><span id="points">10.3</span> pts</h2>
+		<div class="at-bottles">
+			<div class="at-bottle">
+				<img
+					src="{{ url_for('static', filename='images/bottle.png') }}"
+					alt="Bottle"
+				/>
+				<h3>Small</h3>
+				{% comment %} USE THE SPAN BELOW FOR DYNAMIC {% endcomment %}
+				<span>23</span>
+			</div>
+			<div class="at-bottle">
+				<img
+					src="{{ url_for('static', filename='images/bottle.png') }}"
+					alt="Bottle"
+				/>
+				<h3>Medium</h3>
+				{% comment %} USE THE SPAN BELOW FOR DYNAMIC {% endcomment %}
+				<span>23</span>
+			</div>
+			<div class="at-bottle">
+				<img
+					src="{{ url_for('static', filename='images/bottle.png') }}"
+					alt="Bottle"
+				/>
+				<h3>Large</h3>
+				{% comment %} USE THE SPAN BELOW FOR DYNAMIC {% endcomment %}
+				<span>23</span>
+			</div>
+		</div>
+		<button class="finish-button">Finish</button>
+	</div>
+</div>
+{% endblock %}
