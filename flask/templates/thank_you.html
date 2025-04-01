@@ -1,5 +1,6 @@
-{% extends "base.html" %} {% block title %}Start UI{% endblock %} {% block
-content %}
+{% extends "base.html" %} {% block title %}Start UI{% endblock %}
+
+{% block content %}
 <div class="thank_you_container">
 	<h1>Thank you for recycling!</h1>
 	<p>
@@ -10,8 +11,24 @@ content %}
 </div>
 
 <script>
-	document.addEventListener("click", function () {
-		window.location.href = "/";
-	});
-</script>
+	document.body.addEventListener("click", function () {
+	  console.log("Thank you page clicked. Sending clear session request...");
+	  fetch("{{ url_for('clear_session') }}", { // Use url_for for the fetch URL
+		method: 'POST',
+		headers: {'Accept': 'application/json'}
+	  })
+	  .then(response => {
+		if (!response.ok) { console.error("Clear session request failed with status:", response.status); }
+		return response.json();
+	  })
+	  .then(data => {
+		console.log("Clear session response:", data);
+		window.location.href = "{{ url_for('index') }}"; // Use url_for for home page
+	  })
+	  .catch(error => {
+		console.error('Error sending clear session request:', error);
+		window.location.href = "{{ url_for('index') }}"; // Use url_for for home page
+	  });
+	}, { once: true });
+  </script>
 {% endblock %}

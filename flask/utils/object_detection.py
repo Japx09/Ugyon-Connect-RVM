@@ -9,8 +9,8 @@ import time
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 # ESP32 Configuration
-ESP_IP = "http://192.168.123.37"
-LAST_TRIGGER_TIME = 0  # Store last trigger time to prevent spam
+ESP_IP = "http://192.168.123.41"
+bottle_detected = False  # Track if a bottle has been detected
 
 # Load labels
 LABEL_PATH = "/home/japheth09/Documents/RVM_SYSTEM/rvm_env/labelmap.txt"
@@ -55,38 +55,37 @@ while cap.isOpened():
     if not ret:
         logging.warning("Failed to capture frame")
         break
-    
+   
     frame = cv2.rotate(frame, cv2.ROTATE_90_CLOCKWISE)
     input_data = preprocess_image(frame)
-    
+   
     detect_interpreter.set_tensor(input_details[0]['index'], input_data)
     detect_interpreter.invoke()
-    
+   
     classes = detect_interpreter.get_tensor(output_details[1]['index'])[0]
     scores = detect_interpreter.get_tensor(output_details[2]['index'])[0]
-    
+   
     detected_bottle = any(detect_labels[int(classes[i])] == "bottle" and scores[i] > CONFIDENCE_THRESHOLD for i in range(len(scores)))
-    
-    if detected_bottle:
-        current_time = time.time()
-        
-        # Prevent multiple triggers in quick succession (1-second cooldown)
-        if current_time - LAST_TRIGGER_TIME > 1:
-            logging.info("Bottle detected")
-            try:
-                response = requests.get(f"{ESP_IP}/trigger")
-                if response.status_code == 200:
-                    logging.info("ESP32 successfully triggered.")
-                    LAST_TRIGGER_TIME = current_time  # Update last trigger time
-                else:
-                    logging.warning(f"ESP32 response code: {response.status_code}")
-            except Exception as e:
-                logging.error(f"Error triggering ESP32: {e}")
-            
-            time.sleep(1)  # Pause detection for 1 second
-        else:
-            logging.info("Trigger skipped: Cooldown active.")
-    
+   
+    if detected_bottle and not bottle_detected:
+        logging.info("Bottle detected")
+        bottle_detected = True  # Mark as detected to prevent spam
+
+        try:
+            response = requests.get(f"{ESP_IP}/trigger")
+            if response.status_code == 200:
+                logging.info("ESP32 successfully triggered.")
+            else:
+                logging.warning(f"ESP32 response code: {response.status_code}")
+        except Exception as e:
+            logging.error(f"Error triggering ESP32: {e}")
+
+        time.sleep(1)  # Pause for a second after detection
+
+    elif not detected_bottle and bottle_detected:
+        logging.info("Bottle removed, ready for next detection.")
+        bottle_detected = False  # Reset detection flag when no bottle is present
+
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 

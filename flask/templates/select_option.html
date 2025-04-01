@@ -1,28 +1,28 @@
 <!-- templates/home.html -->
 {% extends "base.html" %} {% block title %}Home{% endblock %} {% block content
-%}
-<div class="select_option_container">
-	<h1 class="select_option_header">How would you like to proceed?</h1>
-
-	<div class="option-container">
-		<a href="/qr_code" class="link-style">
-			<div class="option-card option-1">
-				<h1 class="option-header">Ugyon App or Ugyon Card</h1>
-				<span class="option-span"
-					>Scan your Ugyon App or QR Card to earn points <br />
-					for your recycled bottles</span
-				>
-			</div>
-		</a>
-		<a href="/anonymous_transaction" class="link-style">
-			<div class="option-card option-2">
-				<h1 class="option-header">Anonymous Mode</h1>
-				<span class="option-span"
-					>Recycle without earning points. Your <br />contribution
-					still helps the environment!</span
-				>
-			</div>
-		</a>
+	%}
+	<div class="select_option_container">
+		<h1 class="select_option_header">How would you like to proceed?</h1>
+	
+		<div class="option-container">
+			<a href="/qr_code" class="link-style">
+				<div class="option-card option-1">
+					<h1 class="option-header">Ugyon App or Ugyon Card</h1>
+					<span class="option-span"
+						>Scan your Ugyon App or QR Card to earn points <br />
+						for your recycled bottles</span
+					>
+				</div>
+			</a>
+			<a href="/anonymous_transaction" class="link-style">
+				<div class="option-card option-2" style="cursor: pointer;"  onclick="window.location.href='/anonymous_transaction'">
+					<h1 class="option-header">Anonymous Mode</h1>
+					<span class="option-span"
+						>Recycle without earning points. Your <br />contribution
+						still helps the environment!</span
+					>
+				</div>
+			</a>
+		</div>
 	</div>
-</div>
-{% endblock %}
+	{% endblock %}

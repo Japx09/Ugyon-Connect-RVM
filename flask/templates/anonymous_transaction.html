@@ -1,72 +1,119 @@
-{% extends "base.html" %} {% block title %}Start UI{% endblock %} {% block
-content %}
+{% extends "base.html" %}
+{% block title %}Start UI{% endblock %} 
+
+{% block content %}
 
 <div class="splash-screen fade-out">
-	<img src="static/images/logo_w_caption.svg" alt="Logo" />
+<img src="static/images/logo_w_caption.svg" alt="Logo" />
 </div>
 
 <div class="at-container">
-	<div class="at-1">
-		<div class="at-guide">
-			<div class="at-instruction">
-				<h1>1</h1>
-				<p>
-					Only <b>plastic bottles</b> are <br />
-					accepted. <span>No glass bottles</span>, <br />
-					cans, or other materials.
-				</p>
-			</div>
-			<div class="at-instruction">
-				<h1>2</h1>
-				<p>
-					Insert one bottle at a time <br />
-					and wait for detection.
-				</p>
-			</div>
-			<div class="at-instruction">
-				<h1>3</h1>
-				<p>
-					Click "Finish" when you’re <br />
-					done.
-				</p>
-			</div>
+<div class="at-1">
+	<div class="at-guide">
+		<div class="at-instruction">
+			<h1>1</h1>
+			<p>
+				Only <b>plastic bottles</b> are <br />
+				accepted. <span>No glass bottles</span>, <br />
+				cans, or other materials.
+			</p>
 		</div>
-	</div>
-	<div class="at-2">
-		<h1>Bottles Inserted</h1>
-		<h2><span id="points">10.3</span> pts</h2>
-		<div class="at-bottles">
-			<div class="at-bottle">
-				<img
-					src="{{ url_for('static', filename='images/bottle.png') }}"
-					alt="Bottle"
-				/>
-				<h3>Small</h3>
-				<span>23</span>
-			</div>
-			<div class="at-bottle">
-				<img
-					src="{{ url_for('static', filename='images/bottle.png') }}"
-					alt="Bottle"
-				/>
-				<h3>Medium</h3>
-				<span>23</span>
-			</div>
-			<div class="at-bottle">
-				<img
-					src="{{ url_for('static', filename='images/bottle.png') }}"
-					alt="Bottle"
-				/>
-				<h3>Large</h3>
-				<span>23</span>
-			</div>
+		<div class="at-instruction">
+			<h1>2</h1>
+			<p>
+				Insert one bottle at a time <br />
+				and wait for detection.
+			</p>
 		</div>
-		<button type="button" class="finish-button" id="finish_button">
-			Finish
-		</button>
+		<div class="at-instruction">
+			<h1>3</h1>
+			<p>
+				Click "Finish" when you’re <br />
+				done.
+			</p>
+		</div>
 	</div>
 </div>
+        <div class="at-2">
+            <h1>Bottles Inserted</h1>
+            <h2><span id="points_display">0.0</span> pts</h2> <div class="at-bottles">
+                <div class="at-bottle">
+                    <img src="{{ url_for('static', filename='images/bottle.png') }}" alt="Bottle"/>
+                    <h3>Small</h3>
+                    <span id="small_count_display">0</span> </div>
+                <div class="at-bottle">
+                    <img src="{{ url_for('static', filename='images/bottle.png') }}" alt="Bottle"/>
+                    <h3>Medium</h3>
+                    <span id="medium_count_display">0</span> </div>
+                <div class="at-bottle">
+                    <img src="{{ url_for('static', filename='images/bottle.png') }}" alt="Bottle"/>
+                    <h3>Large</h3>
+                    <span id="large_count_display">0</span> </div>
+            </div>
+            <a href="{{ url_for('finish_transaction') }}" style="text-decoration: none; width: 80%;">
+                <button type="button" class="finish-button" id="finish_button" style="width: 100%;">
+                    Finish
+                </button>
+            </a>
+        </div>
+    </div>
 
+
+
+	<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+
+
+
+<script>
+	// --- 1. Firebase Configuration ---
+	// --- IMPORTANT: Use your actual Firebase project config ---
+	const firebaseConfig = {
+	    apiKey: "AIzaSyCAGmw-D0ZPUkJajzooumqu0aMl1cAt6_0",
+		authDomain: "ugyonconnectapp.firebaseapp.com",
+		databaseURL: "https://ugyonconnectapp-default-rtdb.asia-southeast1.firebasedatabase.app",
+		projectId: "ugyonconnectapp",
+		storageBucket: "ugyonconnectapp.firebasestorage.app",
+		messagingSenderId: "206650662788",
+		appId: "1:206650662788:web:a64aafad56954fc70c07d1",
+		measurementId: "G-KNTRT62Q59"
+	};
+  
+	// --- 2. Initialize Firebase ---
+	firebase.initializeApp(firebaseConfig);
+	const database = firebase.database();
+  
+	// --- 3. Get references to HTML elements ---
+	const pointsDisplay = document.getElementById('points_display');
+	const smallCountDisplay = document.getElementById('small_count_display');
+	const mediumCountDisplay = document.getElementById('medium_count_display');
+	const largeCountDisplay = document.getElementById('large_count_display');
+  
+	// --- 4. Set up Firebase Listener ---
+	const currentTransactionRef = database.ref('/current_transaction');
+  
+	currentTransactionRef.on('value', (snapshot) => {
+	  const data = snapshot.val();
+	  console.log("Realtime update received:", data); // For debugging
+  
+	  if (data) {
+		pointsDisplay.innerText = parseFloat(data.points || 0).toFixed(1);
+		smallCountDisplay.innerText = parseInt(data.small || 0);
+		mediumCountDisplay.innerText = parseInt(data.medium || 0);
+		largeCountDisplay.innerText = parseInt(data.large || 0);
+	  } else {
+		// Reset display if data node is null/deleted
+		pointsDisplay.innerText = '0.0';
+		smallCountDisplay.innerText = '0';
+		mediumCountDisplay.innerText = '0';
+		largeCountDisplay.innerText = '0';
+	  }
+	}, (error) => {
+		console.error("Firebase listener error:", error);
+	});
+  </script>	
+
+<!--
 <script defer>
 	const btn = document.getElementById("finish_button");
 	const splash_screen = document.querySelector(".splash-screen");
@@ -80,5 +127,6 @@ content %}
 			window.location.href = "/thank_you";
 		}, 2000);
 	});
-</script>
+</script>-->
+
 {% endblock %}
